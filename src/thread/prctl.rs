@@ -577,7 +577,8 @@ const PR_CAP_AMBIENT_IS_SET: usize = 1;
 #[inline]
 pub fn capability_is_in_ambient_set(capability: Capability) -> io::Result<bool> {
     let cap = capability as usize as *mut _;
-    unsafe { prctl_3args(PR_CAP_AMBIENT, ptr::invalid_mut(PR_CAP_AMBIENT_IS_SET), cap) }.map(|r| r != 0)
+    unsafe { prctl_3args(PR_CAP_AMBIENT, ptr::invalid_mut(PR_CAP_AMBIENT_IS_SET), cap) }
+        .map(|r| r != 0)
 }
 
 const PR_CAP_AMBIENT_CLEAR_ALL: usize = 4;
