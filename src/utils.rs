@@ -17,10 +17,11 @@ pub(crate) fn as_mut_ptr<T>(t: &mut T) -> *mut T {
 /// space.
 #[allow(dead_code)]
 pub(crate) fn check_raw_pointer<T>(value: *mut core::ffi::c_void) -> Option<core::ptr::NonNull<T>> {
-    if (value as usize)
+    if value
+        .addr()
         .checked_add(core::mem::size_of::<T>())
         .is_none()
-        || (value as usize) % core::mem::align_of::<T>() != 0
+        || value.addr() % core::mem::align_of::<T>() != 0
     {
         return None;
     }
